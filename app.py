@@ -4,29 +4,31 @@ from forms import ContactForm
 
 # Flask
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'my secret'
+app.config['SECRET_KEY'] = 'TestPassword'
 app.config['DEBUG'] = False
 
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/book'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///contact.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 
 @app.route("/")
 def index():
-    '''
-    Home page
-    '''
+    """
+    Starting Page
+
+    :return: URL
+    """
+
     return redirect(url_for('contacts'))
 
 
 @app.route("/new_contact", methods=('GET', 'POST'))
 def new_contact():
-    '''
-    Create new contact
-    '''
+    """
+    Create New Contact
+    """
     form = ContactForm()
     if form.validate_on_submit():
         my_contact = Contact()
@@ -46,11 +48,11 @@ def new_contact():
 
 @app.route("/edit_contact/<id>", methods=('GET', 'POST'))
 def edit_contact(id):
-    '''
+    """
     Edit contact
 
     :param id: Id from contact
-    '''
+    """
     my_contact = Contact.query.filter_by(id=id).first()
     form = ContactForm(obj=my_contact)
     if form.validate_on_submit():
@@ -71,30 +73,30 @@ def edit_contact(id):
 
 @app.route("/contacts")
 def contacts():
-    '''
+    """
     Show alls contacts
-    '''
+    """
     contacts = Contact.query.order_by(Contact.name).all()
     return render_template('web/contacts.html', contacts=contacts)
 
 
 @app.route("/search")
 def search():
-    '''
+    """
     Search
-    '''
+    """
     name_search = request.args.get('name')
     all_contacts = Contact.query.filter(
         Contact.name.contains(name_search)
-        ).order_by(Contact.name).all()
+    ).order_by(Contact.name).all()
     return render_template('web/contacts.html', contacts=all_contacts)
 
 
 @app.route("/contacts/delete", methods=('POST',))
 def contacts_delete():
-    '''
+    """
     Delete contact
-    '''
+    """
     try:
         mi_contacto = Contact.query.filter_by(id=request.form['id']).first()
         db.session.delete(mi_contacto)

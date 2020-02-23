@@ -2,13 +2,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/book'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///contact.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-class Contact(db.Model):
 
+class Contact(db.Model):
 
     __tablename__ = 'contacts'
 
