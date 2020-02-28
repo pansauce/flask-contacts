@@ -37,11 +37,11 @@ def new_contact():
         try:
             db.session.commit()
             # User info
-            flash('Contact created correctly', 'success')
+            flash('Contact Created', 'success')
             return redirect(url_for('contacts'))
         except:
             db.session.rollback()
-            flash('Error generating contact.', 'danger')
+            flash('Error Creating Contact.', 'danger')
 
     return render_template('web/new_contact.html', form=form)
 
@@ -62,10 +62,10 @@ def edit_contact(id):
             db.session.add(my_contact)
             db.session.commit()
             # User info
-            flash('Saved successfully', 'success')
+            flash('Save Successful', 'success')
         except:
             db.session.rollback()
-            flash('Error update contact.', 'danger')
+            flash('Error updating contact.', 'danger')
     return render_template(
         'web/edit_contact.html',
         form=form)
@@ -76,7 +76,7 @@ def contacts():
     """
     Show alls contacts
     """
-    contacts = Contact.query.order_by(Contact.name).all()
+    contacts = Contact.query.order_by(Contact.lname).all()
     return render_template('web/contacts.html', contacts=contacts)
 
 
@@ -85,7 +85,7 @@ def search():
     """
     Search
     """
-    name_search = request.args.get('name')
+    name_search = request.args.get('fname')
     all_contacts = Contact.query.filter(
         Contact.name.contains(name_search)
     ).order_by(Contact.name).all()
@@ -98,8 +98,8 @@ def contacts_delete():
     Delete contact
     """
     try:
-        mi_contacto = Contact.query.filter_by(id=request.form['id']).first()
-        db.session.delete(mi_contacto)
+        contact = Contact.query.filter_by(id=request.form['id']).first()
+        db.session.delete(contact)
         db.session.commit()
         flash('Delete successfully.', 'danger')
     except:

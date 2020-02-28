@@ -5,20 +5,22 @@
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th scope="col">Name</th>
-			<th scope="col">Surname</th>
+			<th scope="col">First Name</th>
+			<th scope="col">Last Name</th>
 			<th scope="col">E-Mail</th>
 			<th scope="col">Phone</th>
+			<th scope="col">Title</th>
 			<td></td>
 		</tr>
 	</thead>
 	<tbody>
 	{% for contact in contacts %}
 		<tr>
-			<td>{{ contact.name }}</td>
-			<td>{{ contact.surname }}</td>
+			<td>{{ contact.fname }}</td>
+			<td>{{ contact.lname }}</td>
 			<td>{{ contact.email }}</td>
 			<td>{{ contact.phone }}</td>
+			<td>{{ contact.title }}</td>
 			<td class="text-right">
 				<div class="row">
 					<form action="{{ url_for('contacts_delete') }}" method="post" class="pull-right">
