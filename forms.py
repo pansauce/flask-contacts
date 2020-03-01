@@ -9,3 +9,4 @@ class ContactForm(FlaskForm):
     email = StringField('E-Mail', validators=[Email(), Length(min=-1, max=200, message='You cannot have more than 200 characters')])
     phone = StringField('Phone', validators=[Length(min=-1, max=20, message='You cannot have more than 20 characters')])
     title = StringField('Title', validators=[Length(min=-1, max=50, message='You cannot have more than 50 characters')])
+    company = StringField('Company', validators=[Length(min=-1, max=100, message='You cannot have more than 100 characters')])

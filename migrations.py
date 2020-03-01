@@ -1,5 +1,6 @@
 from models import db, Contact
 from faker import Factory
+import csv
 
 fake = Factory.create()
 
@@ -16,5 +17,12 @@ db.create_all()
 #     # Save in database
 #     contact = Contact(name=name, surname=surname, email=email, phone=phone)
 #     db.session.add(contact)
-
+with open('static/csv/contacts.csv') as f:
+    contacts = csv.reader(f)
+    for contact in contacts:
+        company = contact[1]
+        new_contact = Contact(fname=contact[2], lname=contact[3], title=contact[4], email=contact[5], phone=contact[6],
+                              company=company.title())
+        print("Adding: {0} {1}".format(contact[2], contact[3]))
+        db.session.add(new_contact)
 db.session.commit()

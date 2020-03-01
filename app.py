@@ -76,7 +76,7 @@ def contacts():
     """
     Show alls contacts
     """
-    contacts = Contact.query.order_by(Contact.lname).all()
+    contacts = Contact.query.order_by(Contact.company).all()
     return render_template('web/contacts.html', contacts=contacts)
 
 
@@ -85,10 +85,16 @@ def search():
     """
     Search
     """
-    name_search = request.args.get('fname')
+    name_search = request.args.get('name')
     all_contacts = Contact.query.filter(
-        Contact.name.contains(name_search)
-    ).order_by(Contact.name).all()
+        Contact.lname.contains(name_search)
+    ).order_by(Contact.lname).all()
+    all_contacts += Contact.query.filter(
+        Contact.fname.contains(name_search)
+    ).order_by(Contact.fname).all()
+    all_contacts += Contact.query.filter(
+        Contact.company.contains(name_search)
+    ).order_by(Contact.company).all()
     return render_template('web/contacts.html', contacts=all_contacts)
 
 
