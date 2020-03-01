@@ -77,7 +77,8 @@ def contacts():
     Show alls contacts
     """
     contacts = Contact.query.order_by(Contact.company).all()
-    return render_template('web/contacts.html', contacts=contacts)
+    count = db.session.query(Contact).count()
+    return render_template('web/contacts.html', contacts=contacts, count=count)
 
 
 @app.route("/search")
